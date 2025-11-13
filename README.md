@@ -22,3 +22,7 @@ Get-ChildItem -Path ..\out -Recurse
 本处使用Robot/MainApp.java打开了一个窗口
 
 ![示例1][Picture/p1.png]
+
+## 更新0.2
+
+实现了初始登入选择界面，创建了两个机器人的用例参数，并且能够进行选择和确定触发进入某个聊天
