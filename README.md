@@ -1,6 +1,6 @@
 # JAVA
 
-## VERSION NUMBER: 0.1
+## VERSION NUMBER: 0.3
 
 The Repository used for Java Homework
 
@@ -26,3 +26,15 @@ Get-ChildItem -Path ..\out -Recurse
 ## 更新0.2
 
 实现了初始登入选择界面，创建了两个机器人的用例参数，并且能够进行选择和确定触发进入某个聊天
+
+## 更新0.3
+
+聊天框架搭建完毕，用户可以输入内容
+
+# 学习内容记录
+
+## 路径调试法
+robotIcon = new ImageIcon("Robot_App/Robot"+id.get()+"/static/figure.jpg");
+        String filePath = "Robot_App/Robot" + id.get() + "/static/figure.jpg";
+        File file = new File(filePath);
+        System.out.println("Absolute path: " + file.getAbsolutePath());

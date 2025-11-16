@@ -2,6 +2,8 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.application.Platform;
+import javax.swing.SwingUtilities;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -11,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 class Param{
     private String name;
@@ -48,9 +51,11 @@ public class MainApp extends Application {
             map.put(param.getName(), param.getId());
         }
     }
+   
 
     @Override
     public void start(Stage primaryStage) {
+        Platform.setImplicitExit(false);
         // 创建选择列表（ChoiceBox）和显示标签
         ChoiceBox<String> choice = new ChoiceBox<>(FXCollections.observableArrayList(
              ChatParam.stream()
@@ -63,7 +68,6 @@ public class MainApp extends Application {
         Label selectionLabel = new Label("已选择: " + choice.getValue());
          // 启动按钮
         Button btn = new Button("开始");
-        btn.setOnAction(e -> System.out.println("启动：" + choice.getValue()));
 
          // 使用 VBox 居中布局
         VBox root = new VBox(12, choice, selectionLabel, btn);
@@ -74,17 +78,37 @@ public class MainApp extends Application {
         imageView.setFitWidth(110);
         imageView.setFitHeight(160);
         root.getChildren().add(imageView);
+        AtomicInteger id = new AtomicInteger(1);
 
         choice.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             selectionLabel.setText("已选择: " + newVal);
-            int id = map.get(newVal); // 使用新选择的名称获取 ID
-            Image imagenew = new Image("file:" + ChatParam.get(id - 1).getParapath() + "/static/figure.jpg"); // 注意 id - 1，因为数组索引从 0 开始
-            System.out.println("file:" + ChatParam.get(id - 1).getParapath() + "/static/figure.jpg");
+            id.set(map.get(newVal)); // 使用新选择的名称获取 ID
+            Image imagenew = new Image("file:" + ChatParam.get(id.get() - 1).getParapath() + "/static/figure.jpg"); // 注意 id - 1，因为数组索引从 0 开始
+            System.out.println("file:" + ChatParam.get(id.get() - 1).getParapath() + "/static/figure.jpg");
 
             // 更新 imageView 显示的图片
             imageView.setImage(imagenew);
         });
 
+        btn.setOnAction(e -> {
+            String selected = choice.getValue();
+            // 隐藏 JavaFX 窗口
+            primaryStage.hide();
+
+            // 在 Swing EDT 中创建并显示 RobotChatFrame，传入返回回调（回到 JavaFX）
+            SwingUtilities.invokeLater(() -> {
+                RobotChatFrame frame = new RobotChatFrame(selected,id,() -> {
+                    // 回到 JavaFX 线程显示主舞台
+                    Platform.runLater(() -> primaryStage.show());
+                });
+                frame.setVisible(true);
+            });
+        });
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit(); // 终止 JavaFX 应用程序
+            System.exit(0);  // 退出 JVM
+        });
+        
 
         //Scene展示
         Scene scene = new Scene(root, 500, 500);
