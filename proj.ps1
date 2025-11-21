@@ -1,0 +1,1 @@
+chcp 65001; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $OutputEncoding = New-Object System.Text.UTF8Encoding; $env:JAVA_TOOL_OPTIONS='-Dfile.encoding=UTF-8'; & 'E:\Code\Gitbox\DesktopRobot\tools\apache-maven-3.9.6\bin\mvn.cmd' --% -DskipTests clean compile exec:java -Dexec.mainClass=MainApp

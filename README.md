@@ -12,10 +12,7 @@ The Repository used for Java Homework
 命令需要使用本地配置，同时setting.json和launch.json文件也需要本地管理，这个需要自己配置自己的环境
 
 我的（刘栋旭本地）操作如下
-cd E:\Code\Gitbox\JAVA\Robot
-& 'E:\JAVA_HOME\jdk-21_windows-x64_bin\jdk-21.0.8\bin\javac.exe' --module-path "D:\JAVALib\Lib\openjfx-21.0.9_windows-x64_bin-sdk\javafx-sdk-21.0.9\lib" --add-modules javafx.controls -d ../out MainApp.java
-Get-ChildItem -Path ..\out -Recurse
-& 'E:\JAVA_HOME\jdk-21_windows-x64_bin\jdk-21.0.8\bin\java.exe' --module-path "D:\JAVALib\Lib\openjfx-21.0.9_windows-x64_bin-sdk\javafx-sdk-21.0.9\lib" --add-modules javafx.controls -cp ../out MainApp
+
 
 这将创建out/xx.class文件并执行
 
