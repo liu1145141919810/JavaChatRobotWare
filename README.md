@@ -1,6 +1,6 @@
 # JAVA
 
-## VERSION NUMBER: 0.3
+## VERSION NUMBER: 0.5
 
 The Repository used for Java Homework
 
@@ -39,7 +39,4 @@ The Repository used for Java Homework
 # 学习内容记录
 
 ## 路径调试法
-robotIcon = new ImageIcon("Robot_App/Robot"+id.get()+"/static/figure.jpg");
-        String filePath = "Robot_App/Robot" + id.get() + "/static/figure.jpg";
-        File file = new File(filePath);
-        System.out.println("Absolute path: " + file.getAbsolutePath());
+./proj.ps1
