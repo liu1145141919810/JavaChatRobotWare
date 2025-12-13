@@ -101,7 +101,14 @@ public class MainApp extends Application {
 
             // 在 Swing EDT 中创建并显示 RobotChatFrame22，传入返回回调（回到 JavaFX）
             SwingUtilities.invokeLater(() -> {
-                RobotChatFrame2 frame = new RobotChatFrame2(selected,id,() -> {
+//                RobotChatFrame2 frame = new RobotChatFrame2(selected,id,() -> {
+//                    // 回到 JavaFX 线程显示主舞台
+//                    Platform.runLater(() -> primaryStage.show());
+//                });
+
+                //问题很明确了，之所以跑不起来就是因为RobotChatFrame2。
+                //换成RobotChatFrame就能跑起来了
+                RobotChatFrameDecorated frame = new RobotChatFrameDecorated(selected,id,() -> {
                     // 回到 JavaFX 线程显示主舞台
                     Platform.runLater(() -> primaryStage.show());
                 });
@@ -121,3 +128,4 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 }
+

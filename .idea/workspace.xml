@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e514d2d4-70be-450e-a1bc-d14ecd8f8b21" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MainAppDecorated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/RobotChatFrameDecorated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/javafx.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DesktopRobot.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RobotChatFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RobotChatFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RobotChatFrame2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RobotChatFrame2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/MainApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RobotChatFrame$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RobotChatFrame$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RobotChatFrame$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RobotChatFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RobotChatFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RobotChatFrame2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RobotChatFrame2$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RobotChatFrame2$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RobotChatFrame2$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RobotChatFrame2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RobotChatFrame2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ark/example/TestConnect.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ark/example/TestConnect.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Chesterious&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/liu1145141919810/JAVA&quot;,
+    &quot;accountId&quot;: &quot;37142c94-b423-4c56-84a7-884b41673c4a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="36kHxBicy5EXmTupLdGvfDRp7Cp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Java 草稿.MainApp.executor&quot;: &quot;Run&quot;,
+    &quot;Java 草稿.MainAppDecorated .executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;库&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;应用程序.MainApp.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.RobotChatFrame.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.RobotChatFrameDecorated.executor&quot;: &quot;Run&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Java 草稿.MainAppDecorated ">
+    <configuration name="MainApp" type="Java Scratch">
+      <option name="MAIN_CLASS_NAME" value="MainApp" />
+      <module name="your-project-name" />
+      <option name="SCRATCH_FILE_URL" value="file://$PROJECT_DIR$/src/main/java/MainApp.java" />
+      <shortenClasspath name="NONE" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-25.0.1\openjfx-25.0.1_windows-x64_bin-sdk\javafx-sdk-25.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainAppDecorated " type="Java Scratch">
+      <option name="MAIN_CLASS_NAME" value="MainAppDecorated" />
+      <module name="your-project-name" />
+      <option name="SCRATCH_FILE_URL" value="file://$PROJECT_DIR$/src/main/java/MainAppDecorated.java" />
+      <shortenClasspath name="NONE" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-25.0.1\openjfx-25.0.1_windows-x64_bin-sdk\javafx-sdk-25.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="DesktopRobot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="DesktopRobot" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Java 草稿.MainAppDecorated " />
+      <item itemvalue="Java 草稿.MainApp" />
+    </list>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="e514d2d4-70be-450e-a1bc-d14ecd8f8b21" name="更改" comment="" />
+      <created>1765543892351</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765543892351</updated>
+    </task>
+    <servers />
+  </component>
+</project>

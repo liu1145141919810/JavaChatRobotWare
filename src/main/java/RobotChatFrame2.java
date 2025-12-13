@@ -9,6 +9,7 @@ import com.desktoprobot.util.DatabaseConnection;
     public class RobotChatFrame2 extends RobotChatFrame {
         protected JButton restarButton;//----------------------------------
         protected TestConnect testConnect;
+
         public RobotChatFrame2(String robotName) {
                super(robotName);
         }
@@ -16,11 +17,13 @@ import com.desktoprobot.util.DatabaseConnection;
             super(robotName, id, onBack);
             testConnect = new TestConnect(param);
         }
+
         @Override
         protected String generateRobotReply(String userMessage) {
         // 这里可以调用您的AI服务或使用简单的规则生成回复
         return testConnect.output(userMessage);
     }
+
         @Override
         protected JPanel createTopPanel() {
             JPanel topPanel = new JPanel(new BorderLayout());

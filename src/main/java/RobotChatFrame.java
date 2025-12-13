@@ -475,21 +475,22 @@ public class RobotChatFrame extends JFrame {
     }
 
 
-    // 测试
-    public static void main(String[] args) {
-        // 设置界面风格
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                RobotChatFrame chatFrame = new RobotChatFrame("小助手");
-                chatFrame.setVisible(true);
-            }
-        });
-    }
+
+    // 测试，暂时跑不动，不过也不用管它，因为之前那个正常运行的版本也跑不了这里的测试
+//    public static void main(String[] args) {
+//        // 设置界面风格
+//        try {
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                RobotChatFrame chatFrame = new RobotChatFrame("小助手");
+//                chatFrame.setVisible(true);
+//            }
+//        });
+//    }
 }
