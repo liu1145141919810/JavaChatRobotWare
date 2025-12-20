@@ -6,6 +6,8 @@ import com.volcengine.ark.runtime.model.responses.response.ResponseObject;
 import com.volcengine.ark.runtime.model.responses.content.OutputContentItem;
 import com.volcengine.ark.runtime.model.responses.content.OutputContentItemText;
 import com.volcengine.ark.runtime.model.responses.item.BaseItem;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -65,6 +67,22 @@ public class TestConnect {
         arkService.shutdownExecutor();
     }
     public String output(String input){
+        try{//联网测试
+            URL url = new URL("https://www.baidu.com");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(3000);
+            conn.connect();
+        }
+        catch(Exception e){
+             String[] replies = {
+                "这是一个很有趣的问题！",
+                "让我想想怎么回答你...",
+                "我明白了，你能告诉我更多吗？",
+                "关于" + input + "，我的看法是...",
+                "谢谢你的分享！"
+            };
+            return replies[new Random().nextInt(replies.length)];
+        }
         // create a response first
         CreateResponsesRequest request = CreateResponsesRequest.builder()
                 .model("doubao-seed-1.6-250615")

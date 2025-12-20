@@ -1,6 +1,6 @@
 # JAVA
 
-## VERSION NUMBER: 0.3
+## VERSION NUMBER: 0.5
 
 The Repository used for Java Homework
 
@@ -28,10 +28,15 @@ The Repository used for Java Homework
 
 聊天框架搭建完毕，用户可以输入内容
 
+## 更新0.4
+
+聊天的数据库内容存取搭建完毕
+
+## 更新0.5
+
+嵌入豆包的Doubao seed 1.6 250615
+
 # 学习内容记录
 
 ## 路径调试法
-robotIcon = new ImageIcon("Robot_App/Robot"+id.get()+"/static/figure.jpg");
-        String filePath = "Robot_App/Robot" + id.get() + "/static/figure.jpg";
-        File file = new File(filePath);
-        System.out.println("Absolute path: " + file.getAbsolutePath());
+./proj.ps1
