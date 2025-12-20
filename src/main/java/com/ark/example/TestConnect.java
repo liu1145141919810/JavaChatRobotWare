@@ -13,8 +13,9 @@ import java.util.*;
 public class TestConnect {
     protected String pub;
     protected String pri;
+    protected String chess;
     protected int param;
-    protected static String Ark_key= System.getenv("ARK_API_KEY");
+    protected static String Ark_key= "d96c7eea-0c30-44dc-8b0f-8d96c4d0fcd8";
     protected ArkService arkService;
 
     public TestConnect(int param) {
@@ -22,9 +23,11 @@ public class TestConnect {
         this.arkService = ArkService.builder().apiKey(Ark_key).build();
         String filepathpri = "Robot_App/Robot"+param+"/Robot"+param+".txt";
         String filepathpub = "Robot_App/Public/public.txt";
+        String filechess= "Robot_App/Public/chess.txt";
         try {
             this.pub = Files.readString(Paths.get(filepathpub));
             this.pri = Files.readString(Paths.get(filepathpri));
+            this.chess = Files.readString(Paths.get(filechess));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,6 +69,21 @@ public class TestConnect {
         CreateResponsesRequest request = CreateResponsesRequest.builder()
                 .model("doubao-seed-1.6-250615")
                 .input(ResponsesInput.builder().stringValue(pri+input+pub).build())
+                .build();
+        ResponseObject resp = arkService.createResponse(request);
+        String assistantText = readit(resp);
+        System.out.println(pri+input+pub);
+
+        System.out.println("Assistant output:");
+        System.out.println(assistantText);
+
+        return assistantText;
+    }
+    public String chessout(String input){
+        // create a response first
+        CreateResponsesRequest request = CreateResponsesRequest.builder()
+                .model("doubao-seed-1.6-250615")
+                .input(ResponsesInput.builder().stringValue(chess+input).build())
                 .build();
         ResponseObject resp = arkService.createResponse(request);
         String assistantText = readit(resp);

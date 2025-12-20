@@ -1,106 +1,92 @@
-import javax.swing.*;
-import com.ark.example.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.ark.example.TestConnect;
 import com.desktoprobot.util.DatabaseConnection;
-    public class RobotChatFrame2 extends RobotChatFrame {
-        protected JButton restarButton;//----------------------------------
-        protected TestConnect testConnect;
-        public RobotChatFrame2(String robotName) {
-               super(robotName);
-        }
-        public RobotChatFrame2(String robotName,AtomicInteger id,Runnable onBack) {
-            super(robotName, id, onBack);
-            testConnect = new TestConnect(param);
-        }
-        @Override
-        protected String generateRobotReply(String userMessage) {
-        // 这里可以调用您的AI服务或使用简单的规则生成回复
-        return testConnect.output(userMessage);
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * JavaFX 版本的 RobotChatFrame2，基于 RobotChatFrame。
+ */
+public class RobotChatFrame2 extends RobotChatFrame {
+    protected Button restartButton;
+    protected TestConnect testConnect;
+
+    public RobotChatFrame2(String robotName) {
+        super(robotName);
+        testConnect = new TestConnect(param);
     }
-        @Override
-        protected JPanel createTopPanel() {
-            JPanel topPanel = new JPanel(new BorderLayout());
-            topPanel.setBackground(new Color(240, 240, 240));
-            topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            
-            // 返回按钮
-            restarButton= new JButton("重启!!");
-            backButton = new JButton("返回");
-            restarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // 优先调用 onBack，要求调用端（MainApp）在回调中使用 Platform.runLater 显示 JavaFX 窗口
-                    if (onBack != null) {
-                        try {
-                            String sql = "DELETE FROM chat_sessions WHERE robot_id = ?";
-                            testConnect = null;
-                            new Thread(()->{
-                                try (Connection conn = DatabaseConnection.getConnection();
-                                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                                pstmt.setInt(1,param);
-                                int rowsDeleted = pstmt.executeUpdate();
-                                System.out.println("新建重启成功，删除内容: " + rowsDeleted);
-                                } catch (SQLException excep) {
-                                excep.printStackTrace();
-                                    System.err.println("新建重启失败: " + excep.getMessage());
-                                }
-                            }).start();
-                            System.out.println("重启按钮被点击");
-                            onBack.run();
-                        } catch (Exception ex) {
-                            System.out.println("重启按钮回调异常: " + ex.getMessage());
-                            ex.printStackTrace();
-                        }
-                    }
-                    // 隐藏并释放 Swing 窗口，但不要调用 System.exit
-                    SwingUtilities.invokeLater(() -> {
-                        //数据库内容释放
-                        System.out.println("***");
-                        setVisible(false);
-                        dispose();
-                    });
-                }
-            });
-            backButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // 优先调用 onBack，要求调用端（MainApp）在回调中使用 Platform.runLater 显示 JavaFX 窗口
-                    if (onBack != null) {
-                        try {
-                            onBack.run();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    // 隐藏并释放 Swing 窗口，但不要调用 System.exit
-                    SwingUtilities.invokeLater(() -> {
-                        setVisible(false);
-                        dispose();
-                    });
-                }
-            });
-            
-            // 机器人名称
-            JLabel robotNameLabel = new JLabel(robotName);
-            robotNameLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
-            robotNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-            ImageIcon newrobotIcon = resizeIcon(robotIcon, 50, 70);
-            JLabel robotIconLabel = new JLabel(newrobotIcon);
-            
-            JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
-            leftPanel.add(backButton);
-            leftPanel.add(restarButton);
+    public RobotChatFrame2(String robotName, AtomicInteger id, Runnable onBack) {
+        super(robotName, id, onBack);
+        testConnect = new TestConnect(param);
+    }
 
-            // 添加到 BorderLayout
-            topPanel.add(leftPanel, BorderLayout.WEST);
-            topPanel.add(robotNameLabel, BorderLayout.CENTER);
-            topPanel.add(robotIconLabel, BorderLayout.EAST);
-
-            return topPanel;
+    @Override
+    protected String generateRobotReply(String userMessage) {
+        try{
+        return testConnect != null ? testConnect.output(userMessage) : super.generateRobotReply(userMessage);
+        } catch (Exception e){
+           return super.generateRobotReply(userMessage);
         }
     }
+
+    @Override
+    protected HBox createTopBar() {
+        // 头像 + 名称
+        ImageView avatar = createAvatarView(robotImage, 50, 70);
+        Label nameLabel = new Label(robotName);
+        nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        backButton = new Button("返回");
+        backButton.setOnAction(e -> {
+            if (onBack != null) {
+                try { onBack.run(); } catch (Exception ex) { ex.printStackTrace(); }
+            }
+            close();
+        });
+
+        restartButton = new Button("重启");
+        restartButton.setOnAction(e -> {
+            // 清空该机器人会话记录
+            new Thread(() -> {
+                try (Connection conn = DatabaseConnection.getConnection();
+                     PreparedStatement pstmt = conn.prepareStatement("DELETE FROM chat_sessions WHERE robot_id = ?")) {
+                    pstmt.setInt(1, param);
+                    int rows = pstmt.executeUpdate();
+                    System.out.println("重启清理完成，删除行: " + rows);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    System.err.println("重启清理失败: " + ex.getMessage());
+                }
+            }).start();
+
+            // 回到上层（由 MainApp 决定如何重新进入）
+            if (onBack != null) {
+                try { onBack.run(); } catch (Exception ex) { ex.printStackTrace(); }
+            }
+            close();
+        });
+
+        HBox buttons = new HBox(8, backButton, restartButton);
+        buttons.setAlignment(Pos.CENTER_LEFT);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox top = new HBox(10, buttons, spacer, avatar, nameLabel);
+        top.setAlignment(Pos.CENTER_LEFT);
+        top.setPadding(new Insets(10));
+        top.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: transparent transparent #ddd transparent;");
+        return top;
+    }
+}

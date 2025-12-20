@@ -1,19 +1,19 @@
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.application.Platform;
-import javax.swing.SwingUtilities;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.ark.example.TestConnect;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 class Param{
@@ -89,35 +89,29 @@ public class MainApp extends Application {
             id.set(map.get(newVal)); // 使用新选择的名称获取 ID
             Image imagenew = new Image("file:" + ChatParam.get(id.get() - 1).getParapath() + "/static/figure.jpg"); // 注意 id - 1，因为数组索引从 0 开始
             System.out.println("file:" + ChatParam.get(id.get() - 1).getParapath() + "/static/figure.jpg");
-
             // 更新 imageView 显示的图片
             imageView.setImage(imagenew);
         });
-
         btn.setOnAction(e -> {
             String selected = choice.getValue();
-            // 隐藏 JavaFX 窗口
+            // 隐藏主窗口但不退出
             primaryStage.hide();
 
-            // 在 Swing EDT 中创建并显示 RobotChatFrame22，传入返回回调（回到 JavaFX）
-            SwingUtilities.invokeLater(() -> {
-                RobotChatFrame2 frame = new RobotChatFrame2(selected,id,() -> {
-                    // 回到 JavaFX 线程显示主舞台
-                    Platform.runLater(() -> primaryStage.show());
-                });
-                frame.setVisible(true);
+            // 直接创建 JavaFX 版本的聊天窗口
+            RobotChatFrame3 frame = new RobotChatFrame3(selected, id, () -> {
+                // 回到 JavaFX 主舞台
+                Platform.runLater(primaryStage::show);
             });
+            frame.show();
         });
         primaryStage.setOnCloseRequest(event -> {
-            Platform.exit(); // 终止 JavaFX 应用程序
-            System.exit(0);  // 退出 JVM
+            // 允许正常关闭；如需全局退出可调用 Platform.exit()
+            Platform.exit();
         });
-        
-
         //Scene展示
         Scene scene = new Scene(root, 500, 500);
         primaryStage.setScene(scene);
         primaryStage.setTitle("第二小组Chat bot");
-        primaryStage.show();
+        //primaryStage.show();
     }
 }
