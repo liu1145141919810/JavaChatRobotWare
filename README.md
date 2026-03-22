@@ -1,4 +1,4 @@
-# JAVA
+# JavaChatRobotWare智能聊天机器人小程序
 
 ## 版本: 0.5
 
@@ -34,4 +34,6 @@ JAVA智能AI机器人（使用Doubao AI API)小程序涉及
 ### 更新0.5
 
 嵌入豆包的Doubao seed 1.6 250615
+
+## 构建效果
 
