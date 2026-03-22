@@ -25,59 +25,93 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * MainApp2
+ * --------------------------------------------------
+ * 主界面美化版本（继承自 MainApp）
+ *
+ * 功能说明：
+ * 1. 增加视频开场动画（可点击跳过）
+ * 2. 对原 MainApp 的 UI 进行整体重构与美化
+ * 3. 保留原有逻辑，仅复用并重新布局原组件
+ *
+ * 设计思想：
+ * - 通过继承复用原 MainApp 的业务逻辑
+ * - 不重复造轮子，只做 UI 层的包装与增强
+ */
 public class MainApp2 extends MainApp {
 
+    /** 开场视频播放器 */
     private MediaPlayer mediaPlayer;
 
+    /**
+     * JavaFX 启动方法
+     * ------------------------------------------------
+     * 优先尝试播放开场视频
+     * 若视频加载失败，则直接进入主界面
+     */
     @Override
     public void start(Stage stage) {
+        boolean mediaLoaded = false;
+        try {
+            // 加载本地视频资源
+            File mediaFile = new File(".\\practice\\resource\\Genshin.mp4");
+            if (mediaFile.exists()) {
+                Media media = new Media(mediaFile.toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
 
-        // 1. 指定媒体文件路径（改成你自己的）
-        File mediaFile = new File("E:\\Code\\Gitbox\\JAVA\\practice\\resource\\Genshin.mp4"); 
-        // 也可以是 test.mp3
+                // 循环播放视频
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setOnReady(() -> mediaPlayer.play());
 
-        Media media = new Media(mediaFile.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setOnReady(() -> {
-            mediaPlayer.play();
-        });
-        // 设置循环播放
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                // 视频显示组件
+                MediaView mediaView = new MediaView(mediaPlayer);
+                mediaView.fitWidthProperty().bind(stage.widthProperty());
+                mediaView.fitHeightProperty().bind(stage.heightProperty());
+                mediaView.setPreserveRatio(true);
 
-        // 2. 视频显示组件（音频播放也可以有，但不会显示画面）
-        MediaView mediaView = new MediaView(mediaPlayer);
-        mediaView.fitWidthProperty().bind(stage.widthProperty());
-        mediaView.fitHeightProperty().bind(stage.heightProperty());
-        mediaView.setPreserveRatio(true);
-        mediaView.setPreserveRatio(true);
+                // 点击视频进入主界面
+                mediaView.setOnMouseClicked(e -> {
+                    if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                        mediaPlayer.stop();
+                        mediaPlayer.dispose();
+                    }
+                    start_main(stage);
+                });
 
-        // 3. 控制按钮
-        mediaView.setOnMouseClicked(e -> {
-            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                mediaPlayer.pause();
-                mediaPlayer.stop();
-                mediaPlayer.dispose();
-                start_main(stage);
+                // 简单布局，仅显示视频
+                VBox root = new VBox(10);
+                root.getChildren().add(mediaView);
+                Scene scene = new Scene(root, 800, 600);
+
+                stage.setTitle("原神启动 - 点击视频进入聊天界面");
+                stage.setScene(scene);
+
+                mediaLoaded = true;
             }
-        });
+        } catch (Exception e) {
+            System.err.println("视频资源无法加载，跳过开场动画：" + e.getMessage());
+        }
 
-        // 4. 布局
-        VBox root = new VBox(10);
-        root.getChildren().addAll(mediaView);
-
-        // 5. 场景与窗口
-        Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("原神启动 - 点击视频进入聊天界面");
-        stage.setScene(scene);
-
+        // 如果视频加载失败，直接进入主界面
+        if (!mediaLoaded) {
+            start_main(stage);
+        }
         stage.show();
     }
+
+    /**
+     * 创建机器人展示区域（相框样式）
+     *
+     * @param originalRoot 原 MainApp 中的根布局
+     * @return VBox 机器人展示区域
+     */
     private VBox createRobotDisplay(VBox originalRoot) {
         VBox displayBox = new VBox(20);
         displayBox.setAlignment(Pos.CENTER);
         displayBox.setPadding(new Insets(30));
 
-        // 获取原始图片组件
+        // 从原始布局中提取 ImageView（机器人头像）
         ImageView originalImage = null;
         for (javafx.scene.Node node : originalRoot.getChildren()) {
             if (node instanceof ImageView) {
@@ -87,16 +121,18 @@ public class MainApp2 extends MainApp {
         }
 
         if (originalImage != null) {
-            // 创建相框效果
+            // 相框容器
             StackPane framePane = new StackPane();
 
-            // 木板相框背景
+            // 木质风格相框背景
             Pane woodFrame = new Pane();
-            woodFrame.setStyle("-fx-background-color: linear-gradient(to bottom right, #8B4513, #A0522D, #8B4513);" +
+            woodFrame.setStyle(
+                    "-fx-background-color: linear-gradient(to bottom right, #8B4513, #A0522D, #8B4513);" +
                     "-fx-background-radius: 15;" +
                     "-fx-border-color: #654321;" +
                     "-fx-border-width: 10;" +
-                    "-fx-border-radius: 15;");
+                    "-fx-border-radius: 15;"
+            );
             woodFrame.setPrefSize(300, 400);
 
             // 调整机器人图片大小
@@ -104,78 +140,94 @@ public class MainApp2 extends MainApp {
             originalImage.setFitHeight(330);
             originalImage.setPreserveRatio(true);
 
-            // 添加到相框
+            // 放入相框
             framePane.getChildren().addAll(woodFrame, originalImage);
 
-            // 添加标题
+            // 顶部标题
             Label titleLabel = new Label("CYBER-BIOLOGY UNIT");
             titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 26));
             titleLabel.setTextFill(Color.CYAN);
-            titleLabel.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,255,255,0.8), 10, 0, 0, 0);");
+            titleLabel.setStyle(
+                    "-fx-effect: dropshadow(three-pass-box, rgba(0,255,255,0.8), 10, 0, 0, 0);"
+            );
 
             displayBox.getChildren().addAll(titleLabel, framePane);
         }
 
         return displayBox;
     }
+
+    /**
+     * 构建并展示主界面（在原 MainApp 基础上重新布局）
+     */
     public void start_main(Stage primaryStage) {
+        // 先调用父类 start，生成原始界面
         super.start(primaryStage);
+
         Scene originalScene = primaryStage.getScene();
         VBox originalRoot = (VBox) originalScene.getRoot();
 
-        // 创建新的主布局
+        // 主布局（BorderPane）
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20, 20, 20, 20));
 
-        // 设置外层边框效果
-        mainLayout.setStyle("-fx-background-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);" +
+        // 外层整体风格
+        mainLayout.setStyle(
+                "-fx-background-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);" +
                 "-fx-border-color: #00ffff;" +
                 "-fx-border-width: 3;" +
-                "-fx-border-radius: 10;");
+                "-fx-border-radius: 10;"
+        );
 
-        // 创建中间内容区域
+        // 中央显示区域
         StackPane centerPane = new StackPane();
         centerPane.setPadding(new Insets(15));
-
-        // 中间区域背景
-        centerPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.3);" +
+        centerPane.setStyle(
+                "-fx-background-color: rgba(0, 0, 0, 0.3);" +
                 "-fx-background-radius: 10;" +
                 "-fx-border-color: #ff00ff;" +
                 "-fx-border-width: 1;" +
-                "-fx-border-radius: 10;");
+                "-fx-border-radius: 10;"
+        );
 
-        // 创建机器人显示区域，带相框
+        // 机器人展示区域
         VBox robotDisplay = createRobotDisplay(originalRoot);
         centerPane.getChildren().add(robotDisplay);
 
-        // 创建控制面板
+        // 控制面板（选择 + 启动）
         VBox controlPanel = createControlPanel(originalRoot);
 
-        // 创建作者信息栏
+        // 作者信息栏
         HBox authorBar = createAuthorBar();
 
-        // 把各个部分放到主布局中
+        // 布局放置
         mainLayout.setCenter(centerPane);
         mainLayout.setTop(controlPanel);
         BorderPane.setMargin(controlPanel, new Insets(0, 0, 20, 0));
         mainLayout.setBottom(authorBar);
         BorderPane.setAlignment(authorBar, Pos.BOTTOM_RIGHT);
 
-        // 创建新场景
+        // 应用新场景
         Scene newScene = new Scene(mainLayout, 650, 750);
         primaryStage.setScene(newScene);
         primaryStage.setTitle("第二小组Chat bot - 美化版");
     }
-    // 创建控制面板
+
+    /**
+     * 创建顶部控制面板
+     * （复用原 MainApp 的 ChoiceBox / Label / Button）
+     */
     private VBox createControlPanel(VBox originalRoot) {
         VBox controlBox = new VBox(15);
         controlBox.setAlignment(Pos.CENTER);
         controlBox.setPadding(new Insets(20));
-        controlBox.setStyle("-fx-background-color: rgba(40, 40, 80, 0.5);" +
+        controlBox.setStyle(
+                "-fx-background-color: rgba(40, 40, 80, 0.5);" +
                 "-fx-background-radius: 10;" +
                 "-fx-border-color: linear-gradient(to right, #00ffff, #ff00ff);" +
                 "-fx-border-width: 2;" +
-                "-fx-border-radius: 10;");
+                "-fx-border-radius: 10;"
+        );
 
         // 从原布局中提取组件
         ChoiceBox<String> choiceBox = null;
@@ -192,107 +244,85 @@ public class MainApp2 extends MainApp {
             }
         }
 
-        // 创建组件列表，用于后面从originalRoot中移除
+        // 记录待移除节点，避免并发修改异常
         List<Node> nodesToRemove = new ArrayList<>();
+
         if (choiceBox != null) {
             nodesToRemove.add(choiceBox);
-            // 美化选择框
-            choiceBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.8);" +
-                    "-fx-text-fill: white;" +
+            choiceBox.setStyle(
+                    "-fx-background-color: rgba(255, 255, 255, 0.8);" +
                     "-fx-font-size: 14;" +
                     "-fx-font-weight: bold;" +
                     "-fx-border-color: #00ffff;" +
-                    "-fx-border-width: 1;" +
-                    "-fx-border-radius: 5;" +
-                    "-fx-padding: 5 10;");
+                    "-fx-border-radius: 5;"
+            );
         }
 
         if (selectLabel != null) {
             nodesToRemove.add(selectLabel);
-            // 美化标签
             selectLabel.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 16));
             selectLabel.setTextFill(Color.WHITE);
         }
 
         if (startBtn != null) {
             nodesToRemove.add(startBtn);
-            // 美化开始按钮
             startBtn.setText("启 动 系 统");
             startBtn.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 16));
             startBtn.setPrefSize(200, 45);
-            startBtn.setStyle("-fx-background-color: linear-gradient(to right, #00ffff, #0080ff);" +
-                    "-fx-text-fill: black;" +
-                    "-fx-font-weight: bold;" +
-                    "-fx-background-radius: 25;" +
-                    "-fx-border-color: white;" +
-                    "-fx-border-width: 1;" +
-                    "-fx-border-radius: 25;");
 
-            // 鼠标悬停效果
-            Button finalStartBtn = startBtn;//final副本并非对象本身的副本，而是类似C++里边的指针，即对象引用（指针）的副本
+            // 鼠标悬停效果（引用语义说明）
+            Button finalStartBtn = startBtn;
             startBtn.setOnMouseEntered(e -> {
-                finalStartBtn.setStyle("-fx-background-color: linear-gradient(to right, #00ffaa, #0080ff);" +
-                        "-fx-text-fill: black;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-background-radius: 25;" +
-                        "-fx-border-color: #ffff00;" +
-                        "-fx-border-width: 2;" +
-                        "-fx-border-radius: 25;");
+                finalStartBtn.setStyle(
+                        "-fx-background-color: linear-gradient(to right, #00ffaa, #0080ff);" +
+                        "-fx-border-color: #ffff00;"
+                );
             });
 
             Button finalStartBtn1 = startBtn;
             startBtn.setOnMouseExited(e -> {
-                finalStartBtn1.setStyle("-fx-background-color: linear-gradient(to right, #00ffff, #0080ff);" +
-                        "-fx-text-fill: black;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-background-radius: 25;" +
-                        "-fx-border-color: white;" +
-                        "-fx-border-width: 1;" +
-                        "-fx-border-radius: 25;");
+                finalStartBtn1.setStyle(
+                        "-fx-background-color: linear-gradient(to right, #00ffff, #0080ff);" +
+                        "-fx-border-color: white;"
+                );
             });
         }
 
-        // 从原布局中移除这些组件，防止可能会抛出的ConcurrentModificationException
+        // 从原布局中移除组件
         originalRoot.getChildren().removeAll(nodesToRemove);
 
-        // 将组件添加到controlBox中
-        if (selectLabel != null) {
-            controlBox.getChildren().add(selectLabel);
-        }
-        if (choiceBox != null) {
-            controlBox.getChildren().add(choiceBox);
-        }
-        if (startBtn != null) {
-            controlBox.getChildren().add(startBtn);
-        }
+        // 添加到新控制面板
+        if (selectLabel != null) controlBox.getChildren().add(selectLabel);
+        if (choiceBox != null) controlBox.getChildren().add(choiceBox);
+        if (startBtn != null) controlBox.getChildren().add(startBtn);
 
-        // 返回创建的控制面板
         return controlBox;
-
     }
 
-    // 创建作者信息栏
+    /**
+     * 创建底部作者信息栏
+     */
     private HBox createAuthorBar () {
+        // 作者信息区域
         HBox authorBox = new HBox(10);
         authorBox.setAlignment(Pos.CENTER_RIGHT);
         authorBox.setPadding(new Insets(15));
-        authorBox.setStyle("-fx-background-color: rgba(30, 30, 60, 0.7);" +
-                "-fx-background-radius: 8;" +
+        authorBox.setStyle(
+                "-fx-background-color: rgba(30, 30, 60, 0.7);" +
                 "-fx-border-color: #00ffff;" +
-                "-fx-border-width: 1;" +
-                "-fx-border-radius: 8;");
+                "-fx-border-radius: 8;"
+        );
 
-        // 作者信息
         VBox infoBox = new VBox(5);
-
+        // 团队名称
         Label teamLabel = new Label("桌面机器人");
         teamLabel.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 14));
         teamLabel.setTextFill(Color.LIGHTGREEN);
-
+        // 成员名单
         Label memberLabel = new Label("成员：刘栋旭、梁志僮、李林润");
         memberLabel.setFont(Font.font("Microsoft YaHei", 12));
         memberLabel.setTextFill(Color.LIGHTGRAY);
-
+        // 课程信息
         Label courseLabel = new Label("Java期末大作业");
         courseLabel.setFont(Font.font("Microsoft YaHei", 10));
         courseLabel.setTextFill(Color.GRAY);

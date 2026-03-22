@@ -55,6 +55,24 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>Images</directory>
+                <targetPath>images</targetPath>
+            </resource>
+            <resource>
+                <directory>Robot_App</directory>
+                <targetPath>robot_app</targetPath>
+            </resource>
+            <resource>
+                <directory>practice</directory>
+                <targetPath>practice</targetPath>
+            </resource>
+            <!-- 根据需要添加其他目录 -->
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -63,6 +81,20 @@
                 <configuration>
                     <release>21</release>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
