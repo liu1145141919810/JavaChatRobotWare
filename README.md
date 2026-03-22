@@ -1,6 +1,6 @@
 # JAVA
 
-## VERSION NUMBER: 0.5
+## 版本: 0.5
 
 The Repository used for Java Homework
 
