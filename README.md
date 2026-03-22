@@ -2,9 +2,9 @@
 
 ## 版本: 0.5
 
-JAVA智能AI机器人（使用Doubao AI API)小程序涉及
+JAVA智能AI机器人（使用Doubao AI API)娱乐小程序，本项目基于
 
-## 快速允许
+## 快速运行
 
 命令行使用./proj
 
@@ -35,3 +35,4 @@ JAVA智能AI机器人（使用Doubao AI API)小程序涉及
 
 嵌入豆包的Doubao seed 1.6 250615
 
+## 运行效果
