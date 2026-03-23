@@ -1,6 +1,6 @@
 # JAVA
 
-## VERSION NUMBER: 0.5
+## VERSION NUMBER: 1.0
 
 开发的聊天机器人主要包括“数据库管理”，“UI界面涉及”，“AI回答云端调用”，“内置智能小游戏”五大板块。用户进入系统后从选项栏选择一个合适的机器人，进入聊天页面（按照会话自动区分管理）。而后以聊天界面的详细发送内容并获得机器人的回复。同时可以通过点击机器人头像选择小游戏进行游玩。
 
@@ -172,33 +172,29 @@ chat_messages (message_id,session_id,sender_type,message_content,timestamp)
 
 ### 更新0.1
 
-使用下面的命令可以打开界面
-
-即1.跳转 2.编译 3.执行
-命令需要使用本地配置，同时setting.json和launch.json文件也需要本地管理，这个需要自己配置自己的环境
-
-我的（刘栋旭本地）操作如下
-
-
-这将创建out/xx.class文件并执行
-
-本处使用Robot/MainApp.java打开了一个窗口
-
-![示例1][Picture/p1.png]
+入口界面(MainApp.java)搭建
 
 ### 更新0.2
 
-实现了初始登入选择界面，创建了两个机器人的用例参数，并且能够进行选择和确定触发进入某个聊天
+创建了两个机器人的用例参数，使得入口能够进行选择和确定触发进入某个聊天(RobotChatFrame.java)
 
 ### 更新0.3
 
-聊天框架搭建完毕，用户可以输入内容
+聊天框架(RobotChatFrame.java)第一版搭建完毕，用户可以输入内容,数据库
 
 ### 更新0.4
 
-聊天的数据库内容存取搭建完毕
+聊天的数据库内容存取搭建完毕(RobotChatFrame2)
 
 ### 更新0.5
 
-嵌入豆包的Doubao seed 1.6 250615
+嵌入豆包的Doubao seed 1.6 250615(RobotChatFrame2)
+
+### 更新0.6
+
+加入跳转的小游戏扔色子（DiceRollingGame.java）和下棋 (RobotChessGame.java)
+
+### 更新1.0
+
+将进入和聊天界面美化并渲染(MainApp2.cpp),(RobotChatFrame3.cpp)
 
