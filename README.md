@@ -151,7 +151,10 @@ chat_messages (message_id,session_id,sender_type,message_content,timestamp)
 
 登录界面
 
-![Graph1](graphics/p1.png)
+<p align="center">
+  <img src="graphics/p1.png" width="300"/>
+  <img src="graphics/p2.png" width="300"/>
+</p>
 
 聊天界面
 
