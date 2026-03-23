@@ -149,6 +149,20 @@ chat_messages (message_id,session_id,sender_type,message_content,timestamp)
 
 ## 演示效果
 
+登录界面
+
+![Graph1](graphics/p1.png)
+
+聊天界面
+
+![Graph2](graphics/p2.png)
+
+游戏界面
+
+![Graph3]
+
+![Graph4]
+
 ## 更新日志
 
 ### 更新0.1
