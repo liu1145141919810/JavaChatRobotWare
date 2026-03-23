@@ -153,18 +153,20 @@ chat_messages (message_id,session_id,sender_type,message_content,timestamp)
 
 <p align="center">
   <img src="graphics/p1.png" width="300"/>
-  <img src="graphics/p2.png" width="300"/>
 </p>
 
 聊天界面
 
-![Graph2](graphics/p2.png)
+<p align="center">
+  <img src="graphics/p2.png" width="300"/>
+</p>
 
 游戏界面
 
-![Graph3]
-
-![Graph4]
+<p align="center">
+  <img src="graphics/p3.png" width="300"/>
+  <img src="graphics/p4.png" width="300"/>
+</p>
 
 ## 更新日志
 
