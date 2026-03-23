@@ -43,7 +43,7 @@ JavaChatRobotWare/
 │   ├── MainApp.java 【启动窗口 v1.0】
 │   │   └── 功能：
 │   │       • 机器人选择界面（ChoiceBox）
-│   │       • 动态���换机器人头像
+│   │       • 动态切换机器人头像
 │   │       • 进入聊天窗口的入口
 │   │
 │   ├── MainApp2.java 【启动窗口 v2.0 (美化版)】
