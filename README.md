@@ -156,7 +156,6 @@ chat_messages (message_id,session_id,sender_type,message_content,timestamp)
 |----------------|-----------------------------------|------------------------------------------------------------------------------|
 | 网络/API故障   | 机器人仅返回随机回复、无智能回复  | 1. 检查网络连通性（`ping api.volcengine.com`）；<br>2. 验证ARK API Key有效性；<br>3. 确认防火墙允许访问火山引擎域名 |
 | 数据库故障     | 聊天记录无法保存/加载             | 1. 检查{insert\_element\_0\_YGRhdGFiYXNlLnByb3BlcnRpZXNg}配置（地址/账号/密码）；<br>2. 确认PostgreSQL服务已启动；<br>3. 执行初始化SQL创建会话/消息表 |
-| 资源文件缺失   | 头像/视频无法加载、Prompt失效     | 1. 检查`Robot_App/`下Prompt文件（public.txt/chess.txt/机器人专属txt）；<br>2. 确认`static/figure.jpg`等资源路径正确 |
 | UI响应缓慢     | 发送消息后界面卡顿                | 1. 检查是否在UI线程执行耗时操作（项目已异步优化）；<br>2. 限制历史消息加载数量（默认50条） |
 
 ### 2. 关键容错机制
